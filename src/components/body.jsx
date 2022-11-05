@@ -89,17 +89,19 @@ const Body = () => {
   return (
     <div>
       <div className="md:flex justify-center md:px-20 px-5 py-28">
-        <div className="lg:mr-20 mr-5 mb-20 md:max-w-[600px]">
+        <div className="md:text-left text-center lg:mr-20 mr-5 mb-20 md:max-w-[600px]">
           <p className="text-6xl text-white font-semibold mb-10">
             Manage your crypto portfolio risk
           </p>
           <p className="text-[#ddd] mb-10">
             It can be difficult to manage your risk in this highly volatile
-            crypto market. [Name] is here to help you with that.
+            crypto market. One Cigma is here to help you with that.
           </p>
-          <button className="border rounded-lg bg-[#00000000] text-white py-2 px-4">
-            Manage risk
-          </button>
+          <div className="flex md:block justify-center">
+            <button className="border border-black rounded-lg bg-[#000000] text-white py-2 px-4">
+              Manage risk
+            </button>
+          </div>
         </div>
 
         <div className="border rounded-lg lg:p-10 p-5 md:max-w-[500px] md:min-w-[320px]">
