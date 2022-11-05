@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 
 const Body = () => {
   const $money = 0.1287;
-  const [day, setDay] = useState();
+  // const [day, setDay] = useState();
   const [tokenNumber, setTokenNumber] = useState(0);
   const [dateRange, setDateRange] = useState("PL1D");
+  console.log(dateRange);
 
   const crypto_prices = [
     {
@@ -112,7 +113,7 @@ const Body = () => {
                 <p className="text-[#ddd] font-semibold">{$money}</p>
               </div>
               <div className="border border-white rounded-lg px-1 flex items-center w-6/12">
-                <img src={icons[tokenNumber]} width={20} height={20} />
+                <img src={icons[tokenNumber]} width={20} height={20} alt='' />
                 <div className="select_box">
                   <select
                     className="bg-[#00000000] rounded-lg outline-none py-1 text-[#ddd]"
@@ -189,6 +190,7 @@ const Body = () => {
                       width={24}
                       height={20}
                       className="mr-2"
+                      alt = ''
                     />{" "}
                     {crypto.name} {crypto.symbol}
                   </td>
