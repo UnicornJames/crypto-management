@@ -6,7 +6,6 @@ const Body = () => {
   const [datemenu, setDateMenu] = useState(false);
   const [selectedCoin, setCoinSelect] = useState(0);
   const [selectedDate, setDateSelect] = useState(0);
-  console.log(coinmenu);
 
   const crypto_prices = [
     {
@@ -79,12 +78,10 @@ const Body = () => {
     "/icon/bnb.png",
   ];
 
-  const coins = ["BTC", "ETH", "USDC", "USDT", "BNB"];
-
   const dateranges = [
-    {name:"PL1D", date:1}, 
-    {name:"PL7D", date:7}, 
-    {name:"PL30D", date:30}
+    {name:"PL1D", date:1, text:"1 day"}, 
+    {name:"PL7D", date:7, text:"7 days"}, 
+    {name:"PL30D", date:30, text:"30 days"}
   ];
 
   const handleChangeDataRange = (index) => {
@@ -99,9 +96,6 @@ const Body = () => {
 
   const range = dateranges[selectedDate].name;
 
-  console.log(range);
-  console.log(crypto_prices[selectedCoin][range]);
-
   const pvlpercent = parseFloat(crypto_prices[selectedCoin][range]).toFixed(2);
   const pvlvalue = parseFloat(
     money * crypto_prices[selectedCoin][range] * crypto_prices[selectedCoin].price,
@@ -109,8 +103,8 @@ const Body = () => {
 
   return (
     <div>
-      <div className="md:flex justify-center md:px-20 px-5 py-28">
-        <div className="md:text-left text-center lg:mr-20 mr-5 mb-20 md:max-w-[600px]">
+      <div className="md:flex justify-center items-center md:px-20 px-5 py-28">
+        <div className="text-center lg:mr-20 mr-5 mb-20 md:max-w-[600px]">
           <p className="text-6xl text-white font-semibold mb-10">
             Manage your crypto portfolio risk
           </p>
@@ -118,7 +112,7 @@ const Body = () => {
             It can be difficult to manage your risk in this highly volatile
             crypto market. One Cigma is here to help you with that.
           </p>
-          <div className="flex md:block justify-center">
+          <div className="flex justify-center">
             <button className="border border-black rounded-lg bg-[#000000] text-white py-2 px-4">
               Manage risk
             </button>
@@ -126,67 +120,77 @@ const Body = () => {
         </div>
 
         <div className="border rounded-lg bg-[#ffffff00] lg:p-10 p-5 md:max-w-[500px] md:min-w-[320px]">
-          <p className="md:block flex justify-center text-[#ddd] text-xl mb-8">
+          <p className="md:block flex justify-center mb-8 text-[#ddd] text-xl">
             Calculate the potential risk you are taking
           </p>
-          <div className="flex mb-8">
-            <div className="border rounded-lg flex py-1 px-1 w-8/12 mr-2 items-center">
-              <div className="w-6/12 pl-2">
-                <p className="text-[#ddd] text-[12px]">You have</p>
-                <p className="text-[#ddd] font-semibold">{money}</p>
-              </div>
-              <div className=" w-6/12">
-                <div className="border border-white rounded-lg pl-1 flex items-center">
-                  <button className={`flex items-center py-1 text-white w-full`} onClick={(e) => setCoinMenu(!coinmenu)}>
-                    <img src={icons[selectedCoin]} width={20} height={20} alt="" />
-                    <p className="w-full text-center">{coins[selectedCoin]}</p>
-                    <img src="/icon/down.svg" className={`${!coinmenu ? "block" : "hidden"} mr-2`} width={10} height={10} alt="" />
-                    <img src="/icon/up.svg" className={`${coinmenu ? "block" : "hidden"} mr-2`} width={10} height={10} alt="" />
+          <p className="w-4/12 text-center text-white">You have</p>
+          <div className="mb-8 flex">
+            <div className="relative text-center text border border-white-center text-white rounded-lg py-3 mr-2 w-4/12">
+              <p className="text-[#ddd] font-semibold py-1">{money}</p>
+            </div>
+
+            <div className="relative content-center text border border-white-center text-white rounded-lg py-3 mr-2 w-4/12">
+              <button className={`flex items-center py-1 px-2 text-white w-full`} onClick={(e) => setCoinMenu(!coinmenu)}>
+                <img src={icons[selectedCoin]} width={20} height={20} alt="" />
+                <p className="w-full text-center">{crypto_prices[selectedCoin].symbol}</p>
+                <img src="/icon/down.svg" className={`${!coinmenu ? "block" : "hidden"} mr-2`} width={10} height={10} alt="" />
+                <img src="/icon/up.svg" className={`${coinmenu ? "block" : "hidden"} mr-2`} width={10} height={10} alt="" />
+              </button>
+              <div className={`${coinmenu ? "block" : "hidden"} absolute rounded-b-lg bg-[#00000066] p-2 text-white`}>
+                {crypto_prices.map((coin, index) => (
+                  <button className="flex" onClick={() => handleCoinSelected(index)}>
+                    <img src={icons[index]} className="mr-2" width={20} height={20} alt="" />
+                    {coin.symbol}
                   </button>
-                </div>
-                <div className={`${coinmenu ? "block" : "hidden"} rounded-b-lg bg-[#00000066] ml-1 p-2 absolute text-white`}>
-                  {coins.map((coin, index) => (
-                    <button className="flex" onClick={() => handleCoinSelected(index)}>
-                      <img src={icons[index]} className="mr-2" width={20} height={20} alt="" />
-                      {coin}
-                    </button>
-                  ))}
-                </div>
+                ))}
               </div>
             </div>
-            <div className="content-center text-center text-white rounded-lg py-3 px-1 border border-white w-4/12">
-              <button className="flex items-center text-center w-full" onClick={(e) => setDateMenu(!datemenu)}>
+            
+            <div className="relative content-center border border-white text-center text-white rounded-lg py-3 w-4/12">
+              <button className="flex items-center p-1 w-full" onClick={(e) => setDateMenu(!datemenu)}>
                 <div className="w-full justify-center flex">
-                  {dateranges[selectedDate].date} day<p className={`${dateranges[selectedDate].date === 1 ? "hidden" : "flex"}`}>s</p>
+                  {dateranges[selectedDate].text}
                 </div>
                 <img src="/icon/down.svg" className={`${!datemenu ? "block" : "hidden"} mr-2`} width={10} height={10} alt="" />
                 <img src="/icon/up.svg" className={`${datemenu ? "block" : "hidden"} mr-2`} width={10} height={10} alt="" />
               </button>
-              <div className={`${datemenu ? "block" : "hidden"} rounded-b-lg bg-[#00000066] p-2 absolute text-left`}>
+              <div className={`${datemenu ? "block" : "hidden"} absolute rounded-b-lg bg-[#00000066] p-2 text-left`}>
                 {dateranges.map((daterange, index) => (
-                  <button className="flex" onClick={() => handleChangeDataRange(index)}>
-                    {daterange.date} day<p className={`${daterange.date === 1 ? "hidden" : "flex"}`}>s</p>
+                  <button className="flex w-full" onClick={() => handleChangeDataRange(index)}>
+                    {daterange.text}
                   </button>
                 ))}
               </div>
             </div>
           </div>
-          <p className="text-[#ddd] text-[30px] font-bold">
-            The potential value loss is{" "}
-            <le className="text-[#ffd100] text-[30px] font-bold">
-              {pvlpercent}%
-            </le>{" "}
-            and you are risking{" "}
-            <le className="text-[#ffd100] text-[30px] font-bold">
-              ${pvlvalue}
-            </le>
-          </p>
+          <div>
+            <p className="mb-10 text-center text-[#ddd] text-[30px] font-bold">
+              The potential loss of{" "}
+              <le className="crypto_name text-[30px] font-bold">
+                {crypto_prices[selectedCoin].name}
+              </le>{" "}
+              over{" "}
+              <le className="text-[#ffd100] text-[30px] font-bold">
+                {dateranges[selectedDate].text}
+              </le>{" "}
+              is{" "}
+              <le className="text-[#ffd100] text-[30px] font-bold">
+                {pvlpercent}%
+              </le>{" "}
+            </p>
+            <p className="text-center text-[#ddd] text-[30px] font-bold">
+              Your risk is{" "}
+              <le className="text-[#ffd100] text-[30px] font-bold">
+                ${pvlvalue}
+              </le>
+            </p>
+          </div>
         </div>
       </div>
 
       <div className="md:flex md:px-20 px-5 mt-28 overflow-x-auto">
         <table className="risk_table text-white w-full space-between">
-          <tr>
+          <thead>
             <th className="min-w-[20px]">#</th>
             <th className="min-w-[180px]">Name</th>
             <th className="min-w-[120px]">Price</th>
@@ -197,7 +201,7 @@ const Body = () => {
             <th className="min-w-[120px]">Marketcap</th>
             <th className="min-w-[120px]">Market dominance %</th>
             <th className="min-w-[120px]">Last 7 days</th>
-          </tr>
+          </thead>
           <tbody>
             {crypto_prices.map((crypto, index) => {
               return (
@@ -249,30 +253,32 @@ const Body = () => {
 
       <div className="md:flex justify-center md:px-20 px-5 mt-48 pb-20">
         <div className="lg:mr-20 mr-5 mb-20 md:max-w-[500px] md:w-6/12 ">
-          <p className="md:text-left text-center text-4xl text-white font-semibold mb-10">
+          <p className="text-center text-4xl text-white font-semibold mb-10">
             Before buying a risky coin, check One Cigma
           </p>
-          <p className="md:text-left text-center text-[#ddd] mb-10">
+          <p className="text-center text-[#ddd] mb-10">
             It’s hard to get your emotions out of the way when buying a coin
             that might be way too risky. That’s why you should always check the
             Potential Value Loss before buying any coin.
           </p>
-          <button className="text-white font-semibold flex items-center">
-            See the full list of cryptocurrencies
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              className="bi bi-arrow-right ml-2"
-              viewBox="0 0 16 16"
-            >
-              <path
-                fillRule="evenodd"
-                d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
-              />
-            </svg>
-          </button>
+          <div className="flex justify-center">
+            <button className="text-white font-semibold flex items-center">
+              See the full list of cryptocurrencies
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                className="bi bi-arrow-right ml-2"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
+                />
+              </svg>
+            </button>
+          </div>
         </div>
 
         <div className="border rounded-lg h-[300px] bg-white md:max-w-[500px] md:min-w-[320px] md:w-6/12">

@@ -8,7 +8,7 @@ const Header = () => {
                 <input className='border rounded-xl outline-none border-[#ddd] text-[#ddd] bg-[#00000000] py-1 px-5 md:w-60 mr-2 md:block hidden' placeholder='Search cryptocurrencies...'></input>
                 <div className='flex'>
                     <button className='text-[#ddd] px-3 py-1 md:w-32 mr-2'>Sign in</button>
-                    <button className='border rounded-xl border-[#ddd] text-[#ddd] bg-[#00000000] px-3 py-1 md:w-32'>Sign up</button>
+                    <button className='border rounded-xl border-[#ddd] text-black bg-[#ffffff] px-3 py-1 md:w-32'>Sign up</button>
                 </div>
             </div>
         </div>
