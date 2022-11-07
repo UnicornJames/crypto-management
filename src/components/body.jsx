@@ -86,6 +86,9 @@ const Body = () => {
     setDateRange(e.target.value);
   };
 
+  const pvlpercent = parseFloat(crypto_prices[tokenNumber].PL7D).toFixed(2);
+  const pvlvalue = parseFloat(crypto_prices[tokenNumber].PL7D * crypto_prices[tokenNumber].price).toFixed(2);
+
   return (
     <div>
       <div className="md:flex justify-center md:px-20 px-5 py-28">
@@ -104,8 +107,8 @@ const Body = () => {
           </div>
         </div>
 
-        <div className="border rounded-lg lg:p-10 p-5 md:max-w-[500px] md:min-w-[320px]">
-          <p className="text-[#ddd] text-xl mb-8">
+        <div className="border rounded-lg bg-[#ffffff33] lg:p-10 p-5 md:max-w-[500px] md:min-w-[320px]">
+          <p className="md:block flex justify-center text-[#ddd] text-xl mb-8">
             Calculate the potential risk you are taking
           </p>
           <div className="flex mb-8">
@@ -115,7 +118,7 @@ const Body = () => {
                 <p className="text-[#ddd] font-semibold">{$money}</p>
               </div>
               <div className="border border-white rounded-lg px-1 flex items-center w-6/12">
-                <img src={icons[tokenNumber]} width={20} height={20} alt='' />
+                <img src={icons[tokenNumber]} className='mr-1' width={20} height={20} alt='' />
                 <div className="select_box">
                   <select
                     className="bg-[#00000000] rounded-lg outline-none py-1 text-[#ddd]"
@@ -142,7 +145,7 @@ const Body = () => {
             </div>
             <div className="select_box py-2.5 border border-white">
               <select
-                className="customSelect border rounded-lg outline-none flex p-1 w-4/12 bg-[#00000000] text-[#ddd]"
+                className="customSelect border rounded-lg outline-none flex py-1 w-4/12 bg-[#00000000] text-[#ddd]"
                 onChange={(e) => handleChangeDataRange(e)}
               >
                 <option className="text-black" value="PL1D">
@@ -157,12 +160,12 @@ const Body = () => {
               </select>
             </div>
           </div>
-          <p className="text-[#ddd]">
+          <p className="text-[#ddd] text-[30px] font-bold">
             The potential value loss is{" "}
-            <le className="text-blue-500">
-              {crypto_prices[tokenNumber].PL7D}%
+            <le className="text-[#ffd100] text-[30px] font-bold">
+              {pvlpercent}%
             </le>{" "}
-            and you are risking <le className="text-blue-500">${crypto_prices[tokenNumber].PL7D * crypto_prices[tokenNumber].price}</le>
+            and you are risking <le className="text-[#ffd100] text-[30px] font-bold">${pvlvalue}</le>
           </p>
         </div>
       </div>
@@ -232,10 +235,10 @@ const Body = () => {
 
       <div className="md:flex justify-center md:px-20 px-5 mt-48 pb-20">
         <div className="lg:mr-20 mr-5 mb-20 md:max-w-[500px] md:w-6/12 ">
-          <p className="text-4xl text-white font-semibold mb-10">
+          <p className="md:text-left text-center text-4xl text-white font-semibold mb-10">
             Before buying a risky coin, check One Cigma
           </p>
-          <p className="text-[#ddd] mb-10">
+          <p className="md:text-left text-center text-[#ddd] mb-10">
             It’s hard to get your emotions out of the way when buying a coin
             that might be way too risky. That’s why you should always check the
             Potential Value Loss before buying any coin.
