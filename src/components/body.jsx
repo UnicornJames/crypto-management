@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 
 const Body = () => {
-  const $money = 0.1287;
-  // const [day, setDay] = useState();
-  const [tokenNumber, setTokenNumber] = useState(0);
-  // const [dateRange, setDateRange] = useState("PL1D");
+  const money = 0.1287; 
   const [coinmenu, setCoinMenu] = useState(false);
   const [datemenu, setDateMenu] = useState(false);
   const [selectedCoin, setCoinSelect] = useState(0);
@@ -84,10 +81,15 @@ const Body = () => {
 
   const coins = ["BTC", "ETH", "USDC", "USDT", "BNB"];
 
-  const dateranges = [1, 7, 30];
+  const dateranges = [
+    {name:"PL1D", date:1}, 
+    {name:"PL7D", date:7}, 
+    {name:"PL30D", date:30}
+  ];
 
   const handleChangeDataRange = (index) => {
     setDateSelect(index);
+    setDateMenu(!datemenu);
   };
 
   const handleCoinSelected = (index) => {
@@ -95,9 +97,14 @@ const Body = () => {
     setCoinMenu(!coinmenu);
   }
 
-  const pvlpercent = parseFloat(crypto_prices[selectedCoin].PL7D).toFixed(2);
+  const range = dateranges[selectedDate].name;
+
+  console.log(range);
+  console.log(crypto_prices[selectedCoin][range]);
+
+  const pvlpercent = parseFloat(crypto_prices[selectedCoin][range]).toFixed(2);
   const pvlvalue = parseFloat(
-    crypto_prices[selectedCoin].PL7D * crypto_prices[selectedCoin].price * dateranges[selectedDate],
+    money * crypto_prices[selectedCoin][range] * crypto_prices[selectedCoin].price,
   ).toFixed(2);
 
   return (
@@ -126,7 +133,7 @@ const Body = () => {
             <div className="border rounded-lg flex py-1 px-1 w-8/12 mr-2 items-center">
               <div className="w-6/12 pl-2">
                 <p className="text-[#ddd] text-[12px]">You have</p>
-                <p className="text-[#ddd] font-semibold">{$money}</p>
+                <p className="text-[#ddd] font-semibold">{money}</p>
               </div>
               <div className=" w-6/12">
                 <div className="border border-white rounded-lg pl-1 flex items-center">
@@ -150,15 +157,15 @@ const Body = () => {
             <div className="content-center text-center text-white rounded-lg py-3 px-1 border border-white w-4/12">
               <button className="flex items-center text-center w-full" onClick={(e) => setDateMenu(!datemenu)}>
                 <div className="w-full justify-center flex">
-                  {dateranges[selectedDate]} day<p className={`${dateranges[selectedDate] === 1 ? "hidden" : "flex"}`}>s</p>
+                  {dateranges[selectedDate].date} day<p className={`${dateranges[selectedDate].date === 1 ? "hidden" : "flex"}`}>s</p>
                 </div>
                 <img src="/icon/down.svg" className={`${!datemenu ? "block" : "hidden"} mr-2`} width={10} height={10} alt="" />
                 <img src="/icon/up.svg" className={`${datemenu ? "block" : "hidden"} mr-2`} width={10} height={10} alt="" />
               </button>
               <div className={`${datemenu ? "block" : "hidden"} rounded-b-lg bg-[#00000066] p-2 absolute text-left`}>
                 {dateranges.map((daterange, index) => (
-                  <button className="flex" onClick={(e) => handleChangeDataRange(index)}>
-                    {daterange} day<p className={`${daterange === 1 ? "hidden" : "flex"}`}>s</p>
+                  <button className="flex" onClick={() => handleChangeDataRange(index)}>
+                    {daterange.date} day<p className={`${daterange.date === 1 ? "hidden" : "flex"}`}>s</p>
                   </button>
                 ))}
               </div>
