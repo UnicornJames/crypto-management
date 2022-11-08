@@ -4,8 +4,12 @@ const Body = () => {
   const $money = 0.1287;
   // const [day, setDay] = useState();
   const [tokenNumber, setTokenNumber] = useState(0);
-  const [dateRange, setDateRange] = useState("PL1D");
-  console.log(dateRange);
+  // const [dateRange, setDateRange] = useState("PL1D");
+  const [coinmenu, setCoinMenu] = useState(false);
+  const [datemenu, setDateMenu] = useState(false);
+  const [selectedCoin, setCoinSelect] = useState(0);
+  const [selectedDate, setDateSelect] = useState(0);
+  console.log(coinmenu);
 
   const crypto_prices = [
     {
@@ -78,16 +82,23 @@ const Body = () => {
     "/icon/bnb.png",
   ];
 
-  const handleChangeSelect = (e) => {
-    setTokenNumber(e.target.value);
+  const coins = ["BTC", "ETH", "USDC", "USDT", "BNB"];
+
+  const dateranges = [1, 7, 30];
+
+  const handleChangeDataRange = (index) => {
+    setDateSelect(index);
   };
 
-  const handleChangeDataRange = (e) => {
-    setDateRange(e.target.value);
-  };
+  const handleCoinSelected = (index) => {
+    setCoinSelect(index);
+    setCoinMenu(!coinmenu);
+  }
 
-  const pvlpercent = parseFloat(crypto_prices[tokenNumber].PL7D).toFixed(2);
-  const pvlvalue = parseFloat(crypto_prices[tokenNumber].PL7D * crypto_prices[tokenNumber].price).toFixed(2);
+  const pvlpercent = parseFloat(crypto_prices[selectedCoin].PL7D).toFixed(2);
+  const pvlvalue = parseFloat(
+    crypto_prices[selectedCoin].PL7D * crypto_prices[selectedCoin].price * dateranges[selectedDate],
+  ).toFixed(2);
 
   return (
     <div>
@@ -112,52 +123,43 @@ const Body = () => {
             Calculate the potential risk you are taking
           </p>
           <div className="flex mb-8">
-            <div className="border rounded-lg flex py-1 px-2 w-8/12 mr-2 items-center">
+            <div className="border rounded-lg flex py-1 px-1 w-8/12 mr-2 items-center">
               <div className="w-6/12 pl-2">
                 <p className="text-[#ddd] text-[12px]">You have</p>
                 <p className="text-[#ddd] font-semibold">{$money}</p>
               </div>
-              <div className="border border-white rounded-lg pl-1 flex items-center w-6/12">
-                <img src={icons[tokenNumber]} className='ml-1' width={20} height={20} alt='' />
-                <div className="select_box">
-                  <select
-                    className="bg-[#00000000] rounded-lg outline-none py-1 pr-1 text-[#ddd]"
-                    onChange={(e) => handleChangeSelect(e)}
-                  >
-                    <option className="text-black" value="0">
-                      BTC
-                    </option>
-                    <option className="text-black" value="1">
-                      ETH
-                    </option>
-                    <option className="text-black" value="2">
-                      USDC
-                    </option>
-                    <option className="text-black" value="3">
-                      USDT
-                    </option>
-                    <option className="text-black" value="4">
-                      BNB
-                    </option>
-                  </select>
+              <div className=" w-6/12">
+                <div className="border border-white rounded-lg pl-1 flex items-center">
+                  <button className={`flex items-center py-1 text-white w-full`} onClick={(e) => setCoinMenu(!coinmenu)}>
+                    <img src={icons[selectedCoin]} width={20} height={20} alt="" />
+                    <p className="w-full text-center">{coins[selectedCoin]}</p>
+                    <img src="/icon/down.svg" className={`${!coinmenu ? "block" : "hidden"} mr-2`} width={10} height={10} alt="" />
+                    <img src="/icon/up.svg" className={`${coinmenu ? "block" : "hidden"} mr-2`} width={10} height={10} alt="" />
+                  </button>
+                </div>
+                <div className={`${coinmenu ? "block" : "hidden"} rounded-b-lg bg-[#00000066] ml-1 p-2 absolute text-white`}>
+                  {coins.map((coin, index) => (
+                    <button className="flex" onClick={() => handleCoinSelected(index)}>
+                      <img src={icons[index]} className="mr-2" width={20} height={20} alt="" />
+                      {coin}
+                    </button>
+                  ))}
                 </div>
               </div>
             </div>
-            <div className="select_box py-2.5 border border-white">
-              <select
-                className="customSelect border rounded-lg outline-none flex py-1 px-1 w-4/12 bg-[#00000000] text-[#ddd]"
-                onChange={(e) => handleChangeDataRange(e)}
-              >
-                <option className="text-black ml-2 px-2" value="PL1D">
-                  1 day
-                </option>
-                <option className="text-black ml-2 px-2" value="PL7D">
-                  7 days
-                </option>
-                <option className="text-black ml-2 px-2" value="PL30D">
-                  30 days
-                </option>
-              </select>
+            <div className="content-center text-center text-white rounded-lg py-3 px-1 border border-white w-4/12">
+              <button className="flex items-center text-center w-full" onClick={(e) => setDateMenu(!datemenu)}>
+                <p className="w-full text-center">{dateranges[selectedDate]} days</p>
+                <img src="/icon/down.svg" className={`${!datemenu ? "block" : "hidden"} mr-2`} width={10} height={10} alt="" />
+                <img src="/icon/up.svg" className={`${datemenu ? "block" : "hidden"} mr-2`} width={10} height={10} alt="" />
+              </button>
+              <div className={`${datemenu ? "block" : "hidden"} rounded-b-lg bg-[#00000066] p-2 absolute text-left`}>
+                {dateranges.map((daterange, index) => (
+                  <button className="flex" onClick={(e) => handleChangeDataRange(index)}>
+                    {daterange} days
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
           <p className="text-[#ddd] text-[30px] font-bold">
@@ -165,7 +167,10 @@ const Body = () => {
             <le className="text-[#ffd100] text-[30px] font-bold">
               {pvlpercent}%
             </le>{" "}
-            and you are risking <le className="text-[#ffd100] text-[30px] font-bold">${pvlvalue}</le>
+            and you are risking{" "}
+            <le className="text-[#ffd100] text-[30px] font-bold">
+              ${pvlvalue}
+            </le>
           </p>
         </div>
       </div>
@@ -195,7 +200,7 @@ const Body = () => {
                       width={24}
                       height={20}
                       className="mr-2"
-                      alt = ''
+                      alt=""
                     />{" "}
                     {crypto.name} {crypto.symbol}
                   </td>
