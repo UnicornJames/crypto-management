@@ -149,14 +149,16 @@ const Body = () => {
             </div>
             <div className="content-center text-center text-white rounded-lg py-3 px-1 border border-white w-4/12">
               <button className="flex items-center text-center w-full" onClick={(e) => setDateMenu(!datemenu)}>
-                <p className="w-full text-center">{dateranges[selectedDate]} days</p>
+                <div className="w-full justify-center flex">
+                  {dateranges[selectedDate]} day<p className={`${dateranges[selectedDate] === 1 ? "hidden" : "flex"}`}>s</p>
+                </div>
                 <img src="/icon/down.svg" className={`${!datemenu ? "block" : "hidden"} mr-2`} width={10} height={10} alt="" />
                 <img src="/icon/up.svg" className={`${datemenu ? "block" : "hidden"} mr-2`} width={10} height={10} alt="" />
               </button>
               <div className={`${datemenu ? "block" : "hidden"} rounded-b-lg bg-[#00000066] p-2 absolute text-left`}>
                 {dateranges.map((daterange, index) => (
                   <button className="flex" onClick={(e) => handleChangeDataRange(index)}>
-                    {daterange} days
+                    {daterange} day<p className={`${daterange === 1 ? "hidden" : "flex"}`}>s</p>
                   </button>
                 ))}
               </div>
