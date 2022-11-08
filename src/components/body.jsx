@@ -107,7 +107,7 @@ const Body = () => {
           </div>
         </div>
 
-        <div className="border rounded-lg bg-[#ffffff33] lg:p-10 p-5 md:max-w-[500px] md:min-w-[320px]">
+        <div className="border rounded-lg bg-[#ffffff00] lg:p-10 p-5 md:max-w-[500px] md:min-w-[320px]">
           <p className="md:block flex justify-center text-[#ddd] text-xl mb-8">
             Calculate the potential risk you are taking
           </p>
@@ -117,11 +117,11 @@ const Body = () => {
                 <p className="text-[#ddd] text-[12px]">You have</p>
                 <p className="text-[#ddd] font-semibold">{$money}</p>
               </div>
-              <div className="border border-white rounded-lg px-1 flex items-center w-6/12">
-                <img src={icons[tokenNumber]} className='mr-1' width={20} height={20} alt='' />
+              <div className="border border-white rounded-lg pl-1 flex items-center w-6/12">
+                <img src={icons[tokenNumber]} className='ml-1' width={20} height={20} alt='' />
                 <div className="select_box">
                   <select
-                    className="bg-[#00000000] rounded-lg outline-none py-1 text-[#ddd]"
+                    className="bg-[#00000000] rounded-lg outline-none py-1 pr-1 text-[#ddd]"
                     onChange={(e) => handleChangeSelect(e)}
                   >
                     <option className="text-black" value="0">
@@ -145,16 +145,16 @@ const Body = () => {
             </div>
             <div className="select_box py-2.5 border border-white">
               <select
-                className="customSelect border rounded-lg outline-none flex py-1 w-4/12 bg-[#00000000] text-[#ddd]"
+                className="customSelect border rounded-lg outline-none flex py-1 px-1 w-4/12 bg-[#00000000] text-[#ddd]"
                 onChange={(e) => handleChangeDataRange(e)}
               >
-                <option className="text-black" value="PL1D">
+                <option className="text-black ml-2 px-2" value="PL1D">
                   1 day
                 </option>
-                <option className="text-black" value="PL7D">
+                <option className="text-black ml-2 px-2" value="PL7D">
                   7 days
                 </option>
-                <option className="text-black" value="PL30D">
+                <option className="text-black ml-2 px-2" value="PL30D">
                   30 days
                 </option>
               </select>
