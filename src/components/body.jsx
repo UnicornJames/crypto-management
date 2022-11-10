@@ -136,12 +136,15 @@ const Body = () => {
                 <img src="/icon/down.svg" className={`${!coinmenu ? "block" : "hidden"} mr-2`} width={10} height={10} alt="" />
                 <img src="/icon/up.svg" className={`${coinmenu ? "block" : "hidden"} mr-2`} width={10} height={10} alt="" />
               </button>
-              <div className={`${coinmenu ? "block" : "hidden"} absolute rounded-b-lg bg-[#000000] p-2 text-white`}>
+              <div className={`${coinmenu ? "block" : "hidden"} absolute rounded-b-lg bg-[#00000080] text-white`}>
                 {crypto_prices.map((coin, index) => (
-                  <button className="flex" onClick={() => handleCoinSelected(index)}>
-                    <img src={icons[index]} className="mr-2" width={20} height={20} alt="" />
-                    {coin.symbol}
-                  </button>
+                  <div>
+                    <div className="w-full border border-white border-1" />
+                    <button className="flex  p-2" onClick={() => handleCoinSelected(index)}>
+                      <img src={icons[index]} className="mr-2" width={20} height={20} alt="" />
+                      {coin.symbol}
+                    </button>
+                  </div>
                 ))}
               </div>
             </div>
@@ -154,11 +157,14 @@ const Body = () => {
                 <img src="/icon/down.svg" className={`${!datemenu ? "block" : "hidden"} mr-2`} width={10} height={10} alt="" />
                 <img src="/icon/up.svg" className={`${datemenu ? "block" : "hidden"} mr-2`} width={10} height={10} alt="" />
               </button>
-              <div className={`${datemenu ? "block" : "hidden"} absolute rounded-b-lg bg-[#000000] p-2 text-left`}>
+              <div className={`${datemenu ? "block" : "hidden"} absolute rounded-b-lg bg-[#00000080] text-left`}>
                 {dateranges.map((daterange, index) => (
-                  <button className="flex w-full" onClick={() => handleChangeDataRange(index)}>
-                    {daterange.text}
-                  </button>
+                  <div>
+                    <div className="w-full border border-white border-1" />
+                    <button className="flex w-full p-2" onClick={() => handleChangeDataRange(index)}>
+                      {daterange.text}
+                    </button>
+                  </div>
                 ))}
               </div>
             </div>
